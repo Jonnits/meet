@@ -36,7 +36,6 @@ module.exports.getAuthURL = async () => {
 };
 
 
-
 module.exports.getAccessToken = async (event) => {
 // Decode authorization code extracted from the URL query
 const code = decodeURIComponent(`${event.pathParameters.code}`);
@@ -70,3 +69,49 @@ oAuth2Client.getToken(code, (error, response) => {
     };
   });
 };
+
+
+module.exports.getCalendarEvents = async (event) => {
+    // Extract access token from the URL query parameters
+    const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
+    
+    // Set the access token as credentials in oAuth2Client
+    oAuth2Client.setCredentials({ access_token });
+  
+    return new Promise((resolve, reject) => {
+      calendar.events.list(
+        {
+          calendarId: CALENDAR_ID,
+          auth: oAuth2Client,
+          timeMin: new Date().toISOString(),
+          singleEvents: true,
+          orderBy: "startTime",
+        },
+        (error, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(response);
+          }
+        }
+      );
+    })
+    .then((results) => {
+      // Respond with calendar events
+      return {
+        statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+        },
+        body: JSON.stringify({ events: results.data.items }),
+      };
+    })
+    .catch((error) => {
+      // Handle error
+      return {
+        statusCode: 500,
+        body: JSON.stringify(error),
+      };
+    });
+  };
