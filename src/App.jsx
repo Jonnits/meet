@@ -1,12 +1,14 @@
 import React from 'react';
 
 
-const App() {
+import EventList from './components/EventList';
+const App = () => {
   return (
     <div className="App">
-      <div id="event-list"></div>
+      <EventList />
     </div>
   );
 }
+
 
 export default App;
