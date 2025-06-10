@@ -22,5 +22,5 @@ export const extractLocations = (events) => {
  * This function will fetch the list of all events
  */
 export const getEvents = async () => {
-  return mockData;
+  return mockData.items;
 };
