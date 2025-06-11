@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 
-const CitySearch = ({ allLocations }) => {
+const CitySearch = ({ allLocations, onLocationSelect }) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [query, setQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
@@ -20,7 +20,8 @@ const CitySearch = ({ allLocations }) => {
     const handleItemClicked = (event) => {
     const value = event.target.textContent;
     setQuery(value);
-    setShowSuggestions(false); // to hide the list
+    setShowSuggestions(false);
+    onLocationSelect(value); 
   };
 
  return (
