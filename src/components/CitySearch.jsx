@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 
-const CitySearch = ({ allLocations, onLocationSelect }) => {
+const CitySearch = ({ allLocations = [], onLocationSelect = () => {} }) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [query, setQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);

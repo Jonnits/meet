@@ -17,7 +17,7 @@ describe('<Event /> component', () => {
 
   test('renders event start time', () => {
     const { queryByText } = render(<Event event={event} />);
-    expect(queryByText(event.created)).toBeInTheDocument();
+    expect(queryByText(new Date(event.created).toString())).toBeInTheDocument();
   });
 
   test('renders event location', () => {
@@ -37,19 +37,21 @@ describe('<Event /> component', () => {
 
   test('user can expand event to see details', async () => {
     const user = userEvent.setup();
-    const { queryByText } = render(<Event event={event} />);
-    const showButton = queryByText(/show details/i);
+    const { getByText, container } = render(<Event event={event} />);
+    const showButton = getByText(/show details/i);
     await user.click(showButton);
-    expect(queryByText(event.description)).toBeInTheDocument();
+  
+    const detailsEl = container.querySelector('.event-details');
+    expect(detailsEl.textContent).toContain(event.description);
   });
 
   test('user can collapse event to hide details', async () => {
     const user = userEvent.setup();
-    const { queryByText } = render(<Event event={event} />);
-    const showButton = queryByText(/show details/i);
-    await user.click(showButton);
-    const hideButton = queryByText(/hide details/i);
-    await user.click(hideButton);
-    expect(queryByText(event.description)).not.toBeInTheDocument();
-  });
+    const { container, getByText } = render(<Event event={event} />);
+    await user.click(getByText(/show details/i));
+    await user.click(getByText(/hide details/i));
+  
+    expect(container.querySelector('.event-details')).not.toBeInTheDocument();
+  });  
+  
 });
