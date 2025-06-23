@@ -1,50 +1,37 @@
-// src/App.jsx
-import React, { useState, useEffect } from 'react';
-import EventList from './components/EventList';
+import React, { useEffect, useState } from 'react';
 import CitySearch from './components/CitySearch';
+import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
-import { getEvents, extractLocations } from './api';
+import { extractLocations, getEvents } from './api';
+
+import './App.css';
 
 const App = () => {
+  const [allLocations, setAllLocations] = useState([]);
+  const [currentNOE, setCurrentNOE] = useState(32);
   const [events, setEvents] = useState([]);
-  const [allEvents, setAllEvents] = useState([]);
-  const [locations, setLocations] = useState([]);
-  const [currentLocation, setCurrentLocation] = useState('all');
-  const [numberOfEvents, setNumberOfEvents] = useState(32);
+  const [currentCity, setCurrentCity] = useState("See all cities");
 
   useEffect(() => {
-    const fetchData = async () => {
-      const fetchedEvents = await getEvents();
-      setAllEvents(fetchedEvents);
-      setLocations(extractLocations(fetchedEvents));
-      setEvents(fetchedEvents.slice(0, numberOfEvents));
-    };
     fetchData();
-  }, [numberOfEvents]);
+  }, [currentCity]);
 
-  const updateEvents = (location) => {
-    setCurrentLocation(location);
-    const filtered =
-      location === 'See all cities'
-        ? allEvents
-        : allEvents.filter((event) => event.location === location);
-    setEvents(filtered.slice(0, numberOfEvents));
-  };
+  const fetchData = async () => {
+    const allEvents = await getEvents();
+    if (!Array.isArray(allEvents)) return;
 
-  const handleNumberChange = (value) => {
-    const count = parseInt(value) || 0;
-    setNumberOfEvents(count);
-    const filtered =
-      currentLocation === 'all' || currentLocation === 'See all cities'
-        ? allEvents
-        : allEvents.filter((event) => event.location === currentLocation);
-    setEvents(filtered.slice(0, count));
+    const filteredEvents = currentCity === "See all cities"
+      ? allEvents
+      : allEvents.filter(event => event.location === currentCity);
+
+    setEvents(filteredEvents.slice(0, currentNOE));
+    setAllLocations(extractLocations(allEvents));
   };
 
   return (
-    <div>
-      <CitySearch allLocations={locations} onLocationSelect={updateEvents} />
-      <NumberOfEvents numberOfEvents={numberOfEvents} onNumberChange={handleNumberChange} />
+    <div className="App">
+      <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />
+      <NumberOfEvents />
       <EventList events={events} />
     </div>
   );

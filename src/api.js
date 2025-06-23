@@ -1,14 +1,6 @@
 import mockData from './mock-data';
 
 
-/**
- *
- * @param {*} events:
- * The following function should be in the “api.js” file.
- * This function takes an events array, then uses map to create a new array with only locations.
- * It will also remove all duplicates by creating another new array using the spread operator and spreading a Set.
- * The Set will remove all duplicates from the array.
- */
 export const extractLocations = (events) => {
   const eventArray = events.items || events;
   const extractedLocations = eventArray.map((event) => event.location);
@@ -16,11 +8,72 @@ export const extractLocations = (events) => {
   return locations;
 };
 
+export const getAccessToken = async () => {
+  const accessToken = localStorage.getItem('access_token');
+  const tokenCheck = accessToken && (await checkToken(accessToken));
 
-/**
- *
- * This function will fetch the list of all events
- */
+  if (!accessToken || tokenCheck.error) {
+    await localStorage.removeItem("access_token");
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = await searchParams.get("code");
+    if (!code) {
+      const response = await fetch(
+        "https://sdr1kj1q36.execute-api.us-west-2.amazonaws.com/dev/api/get-auth-url"
+      );
+      const result = await response.json();
+      const { authUrl } = result;
+      return (window.location.href = authUrl);
+    }
+    return code && getToken(code);
+  }
+  return accessToken;
+};
+
 export const getEvents = async () => {
-  return mockData.items;
+  if (window.location.href.startsWith("http://localhost")) {
+    return mockData.items; // <-- Use the array
+  }
+
+  const token = await getAccessToken();
+
+  if (token) {
+    removeQuery();
+    const url = `https://sdr1kj1q36.execute-api.us-west-2.amazonaws.com/dev/api/get-events/${token}`;
+    try {
+      const response = await fetch(url);
+      const result = await response.json();
+      if (Array.isArray(result.events)) {
+        return result.events;
+      }
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  }
+
+  return []; 
+};
+
+const removeQuery = () => {
+  const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+  window.history.pushState("", "", newurl);
+};
+
+const getToken = async (code) => {
+  const encodeCode = encodeURIComponent(code);
+  const response = await fetch(
+    `https://sdr1kj1q36.execute-api.us-west-2.amazonaws.com/dev/api/get-access-token/${encodeCode}`
+  );
+  const { access_token } = await response.json();
+  if (access_token) {
+    localStorage.setItem("access_token", access_token);
+  }
+  return access_token;
+};
+
+const checkToken = async (accessToken) => {
+  const response = await fetch(
+    `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
+  );
+  const result = await response.json();
+  return result;
 };
