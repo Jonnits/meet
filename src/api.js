@@ -31,27 +31,46 @@ export const getAccessToken = async () => {
 
 export const getEvents = async () => {
   if (window.location.href.startsWith("http://localhost")) {
-    return mockData.items; // <-- Use the array
+    console.log("[getEvents] Using local mock data.");
+    return mockData.items;
   }
 
-  const token = await getAccessToken();
-
-  if (token) {
-    removeQuery();
-    const url = `https://sdr1kj1q36.execute-api.us-west-2.amazonaws.com/dev/api/get-events/${token}`;
-    try {
-      const response = await fetch(url);
-      const result = await response.json();
-      if (Array.isArray(result.events)) {
-        return result.events;
-      }
-    } catch (error) {
-      console.error("Error fetching events:", error);
+  try {
+    const token = await getAccessToken();
+    if (!token) {
+      console.warn("[getEvents] No access token retrieved.");
+      return [];
     }
+
+    removeQuery(); 
+
+    const url = `https://sdr1kj1q36.execute-api.us-west-2.amazonaws.com/dev/api/get-events/${token}`;
+    console.log(`[getEvents] Fetching events from: ${url}`);
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`[getEvents] API response not ok: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log("[getEvents] Fetched result:", result);
+
+    if (Array.isArray(result.events)) {
+      return result.events;
+    } else if (Array.isArray(result)) {
+      console.warn("[getEvents] Expected 'events' key, got array directly.");
+      return result;
+    } else {
+      console.error("[getEvents] Unexpected response format:", result);
+    }
+
+  } catch (error) {
+    console.error("[getEvents] Error occurred:", error);
   }
 
-  return []; 
+  return [];
 };
+
 
 const removeQuery = () => {
   const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
