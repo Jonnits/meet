@@ -80,7 +80,7 @@ const removeQuery = () => {
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const response = await fetch(
-    `https://sdr1kj1q36.execute-api.us-west-2.amazonaws.com/dev/api/get-access-token/${encodeCode}`
+    `https://sdr1kj1q36.execute-api.us-west-2.amazonaws.com/dev/api/token/${encodeCode}`
   );
   const { access_token } = await response.json();
   if (access_token) {
