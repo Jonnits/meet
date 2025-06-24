@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/18</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/18</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -119,42 +119,42 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">26x</span>
-<span class="cline-any cline-yes">26x</span>
-<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">48x</span>
+<span class="cline-any cline-yes">48x</span>
+<span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">48x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -177,8 +177,8 @@ const CitySearch = ({ allLocations, setCurrentCity }) =&gt; {
 &nbsp;
     const handleInputChanged = (event) =&gt; {
         const value = event.target.value;
-        const filteredLocations = allLocations ? allLocations.filter(<span class="fstat-no" title="function not covered" >(l</span>ocation) =&gt; {
-<span class="cstat-no" title="statement not covered" >          return location.toUpperCase().indexOf(value.toUpperCase()) &gt; -1;</span>
+        const filteredLocations = allLocations ? allLocations.filter((location) =&gt; {
+          return location.toUpperCase().indexOf(value.toUpperCase()) &gt; -1;
         }) : <span class="branch-1 cbranch-no" title="branch not covered" >[];</span>
     
     
@@ -186,11 +186,11 @@ const CitySearch = ({ allLocations, setCurrentCity }) =&gt; {
         setSuggestions(filteredLocations);
       };
 &nbsp;
-    const handleItemClicked = <span class="fstat-no" title="function not covered" >(e</span>vent) =&gt; {
-    const value = <span class="cstat-no" title="statement not covered" >event.target.textContent;</span>
-<span class="cstat-no" title="statement not covered" >    setQuery(value);</span>
-<span class="cstat-no" title="statement not covered" >    setShowSuggestions(false);</span>
-<span class="cstat-no" title="statement not covered" >    setCurrentCity(value); </span>
+    const handleItemClicked = (event) =&gt; {
+    const value = event.target.textContent;
+    setQuery(value);
+    setShowSuggestions(false);
+    setCurrentCity(value); 
   };
 &nbsp;
  return (
@@ -205,8 +205,8 @@ const CitySearch = ({ allLocations, setCurrentCity }) =&gt; {
     /&gt;
       {showSuggestions ?
         &lt;ul className="suggestions"&gt;
-          {suggestions.map(<span class="fstat-no" title="function not covered" >(s</span>uggestion) =&gt; {
-<span class="cstat-no" title="statement not covered" >            return &lt;li onClick={handleItemClicked} key={suggestion}&gt;{suggestion}&lt;/li&gt;</span>
+          {suggestions.map((suggestion) =&gt; {
+            return &lt;li onClick={handleItemClicked} key={suggestion}&gt;{suggestion}&lt;/li&gt;
           })}
           &lt;li key='See all cities' onClick={handleItemClicked}&gt;
             &lt;b&gt;See all cities&lt;/b&gt;
@@ -226,7 +226,7 @@ export default CitySearch;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-24T01:53:43.358Z
+                at 2025-06-24T18:44:29.399Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
