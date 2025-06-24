@@ -1,41 +1,47 @@
+// src/App.jsx
 import React, { useEffect, useState } from 'react';
 import CitySearch from './components/CitySearch';
-import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
+import EventList from './components/EventList';
 import { extractLocations, getEvents } from './api';
-
 import './App.css';
 
 const App = () => {
-  const [allLocations, setAllLocations] = useState([]);
-  const [currentNOE, setCurrentNOE] = useState(32);
-  const [events, setEvents] = useState([]);
-  const [currentCity, setCurrentCity] = useState("See all cities");
+  const [allLocations, setAllLocations]       = useState([]);
+  const [currentCity,  setCurrentCity]        = useState('See all cities');
+  const [currentNOE,   setCurrentNOE]         = useState(32);
+  const [events,       setEvents]             = useState([]);
 
   useEffect(() => {
-    fetchData();
+    const fetchAndFilter = async () => {
+      const allEvents = await getEvents();
+      if (!Array.isArray(allEvents)) return;
+
+      const filtered = 
+        currentCity === 'See all cities'
+          ? allEvents
+          : allEvents.filter(e => e.location === currentCity);
+
+      setEvents(filtered.slice(0, currentNOE));
+
+      setAllLocations(extractLocations(allEvents));
+    };
+
+    fetchAndFilter();
   }, [currentCity, currentNOE]);
-
-  const fetchData = async () => {
-    const allEvents = await getEvents();
-    if (!Array.isArray(allEvents)) return;
-
-    const filteredEvents = currentCity === "See all cities"
-      ? allEvents
-      : allEvents.filter(event => event.location === currentCity);
-
-    setEvents(filteredEvents.slice(0, currentNOE));
-    setAllLocations(extractLocations(allEvents));
-  };
 
   return (
     <div className="App">
-      <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />
-      <NumberOfEvents />
-      <NumberOfEvents
+      <CitySearch 
+        allLocations={allLocations} 
+        setCurrentCity={setCurrentCity} 
+      />
+
+      <NumberOfEvents 
         numberOfEvents={currentNOE}
         onNumberChange={val => setCurrentNOE(Number(val))}
-        />
+      />
+
       <EventList events={events} />
     </div>
   );
