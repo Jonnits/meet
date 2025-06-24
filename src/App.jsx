@@ -31,11 +31,10 @@ const App = () => {
   return (
     <div className="App">
       <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />
-      <NumberOfEvents />
       <NumberOfEvents
         numberOfEvents={currentNOE}
         onNumberChange={val => setCurrentNOE(Number(val))}
-        />
+      />
       <EventList events={events} />
     </div>
   );
