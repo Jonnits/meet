@@ -31,43 +31,63 @@ module.exports.getAuthURL = async () => {
 };
 
 module.exports.getAccessToken = async (event) => {
-const code = decodeURIComponent(`${event.pathParameters.code}`);
+  try {
+
+    const code = decodeURIComponent(`${event.pathParameters.code}`);
     
-return new Promise((resolve, reject) => {
-oAuth2Client.getToken(code, (error, response) => {
-    if (error) {
-    return reject(error);
-    }
-    return resolve(response);
-});
-})
-.then((results) => {
-    // Respond with OAuth token
+    return new Promise((resolve, reject) => {
+      oAuth2Client.getToken(code, (error, response) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(response);
+      });
+    })
+    .then((results) => {
+
+      return {
+        statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'GET,OPTIONS'
+        },
+        body: JSON.stringify(results),
+      };
+    })
+    .catch((error) => {
+      console.error('Token error:', error);
+
+      return {
+        statusCode: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'GET,OPTIONS'
+        },
+        body: JSON.stringify({ error: error.message }),
+      };
+    });
+  } catch (error) {
+    console.error('Outer error:', error);
     return {
-    statusCode: 200,
-    headers: {
+      statusCode: 500,
+      headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-    },
-    body: JSON.stringify(results),
+        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+        'Access-Control-Allow-Methods': 'GET,OPTIONS'
+      },
+      body: JSON.stringify({ error: error.message }),
     };
-})
-.catch((error) => {
-    // Handle error
-    return {
-    statusCode: 500,
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-    },
-    body: JSON.stringify(error),
-    };
-  });
+  }
 };
 
+
 module.exports.getEvents = async (event) => {
+
     const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
     
+
     oAuth2Client.setCredentials({ access_token });
   
     return new Promise((resolve, reject) => {
@@ -89,6 +109,7 @@ module.exports.getEvents = async (event) => {
       );
     })
     .then((results) => {
+
       return {
         statusCode: 200,
         headers: {
@@ -99,6 +120,7 @@ module.exports.getEvents = async (event) => {
       };
     })
     .catch((error) => {
+ 
       return {
         statusCode: 500,
         headers: {
@@ -112,6 +134,7 @@ module.exports.getEvents = async (event) => {
 
 
 module.exports.getCalendarEvents = async (event) => {
+
     const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
     
     oAuth2Client.setCredentials({ access_token });
@@ -145,6 +168,7 @@ module.exports.getCalendarEvents = async (event) => {
       };
     })
     .catch((error) => {
+      // Handle error
       return {
         statusCode: 500,
         headers: {
