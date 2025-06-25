@@ -57,7 +57,8 @@ input[type="number"] {
   text-align: left;
   padding: 8px 6px 8px 10px;
   background-color: #eee;
-  color: #333 cursor: default;
+  color: #333;
+  cursor: default;
 }
 
 .suggestions>li:last-child {
