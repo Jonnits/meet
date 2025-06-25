@@ -3,10 +3,6 @@
 .App {
   text-align: center;
   padding: 2% 5%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
 }
 
 .App * {
@@ -44,8 +40,6 @@ input[type="number"] {
   flex-direction: column;
   margin: auto;
   position: relative;
-  width: 250px;
-  margin-bottom: 20px;
 }
 
 .suggestions {
@@ -76,8 +70,23 @@ input[type="number"] {
   background-color: #bcdcdb;
 }
 
-#number-of-events {
-  margin-bottom: 20px;
+.event {
+  padding: 10px 10px 35px;
+  margin-bottom: 10px;
+  text-align: left;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  position: relative;
+}
+
+.details-btn {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
 }
 
 #event-list {
@@ -85,7 +94,6 @@ input[type="number"] {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 800px;
 }
 
 .event {
@@ -97,14 +105,4 @@ input[type="number"] {
   position: relative;
   width: 100%;
   max-width: 600px;
-}
-
-.details-btn {
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
-  padding: 5px 8px;
-  border-radius: 4px;
-  outline: none;
-  cursor: pointer;
 }
