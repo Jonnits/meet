@@ -57,7 +57,7 @@ input[type="number"] {
   text-align: left;
   padding: 8px 6px 8px 10px;
   background-color: #eee;
-  cursor: default;
+  color: #333 cursor: default;
 }
 
 .suggestions>li:last-child {
@@ -86,4 +86,10 @@ input[type="number"] {
   border-radius: 4px;
   outline: none;
   cursor: pointer;
+}
+
+#event-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
