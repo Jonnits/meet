@@ -24,7 +24,7 @@ const Event = ({event}) => {
                 </div>
             )
         }
-        <button onClick={() => setShowDetails(!showDetails)}>
+        <button className="details-btn" onClick={() => setShowDetails(!showDetails)}>
             {showDetails ? 'Hide Details' : 'Show Details'}
         </button>
     </li>
