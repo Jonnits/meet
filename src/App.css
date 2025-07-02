@@ -6,20 +6,10 @@
   box-sizing: border-box;
 }
 
-:root {
-  --primary: #8b5cf6;
-  --primary-hover: #7c3aed;
-  --background: #faf5ff;
-  --card-bg: #ffffff;
-  --text-primary: #581c87;
-  --text-secondary: #7c2d92;
-  --border: #e9d5ff;
-  --shadow: rgba(139, 92, 246, 0.15);
-}
-
 body {
   font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background-color: #fafafa;
+  background-color: #0f172a;
+  color: #f1f5f9;
 }
 
 #root {
@@ -45,9 +35,17 @@ input[type="number"] {
   padding: 8px 10px;
   border-radius: 4px;
   outline: none;
-  border: 1px solid #ccc;
+  border: 1px solid #334155;
   font-size: 14px;
   height: 38px;
+  background-color: #1e293b;
+  color: #f1f5f9;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 #city-search {
@@ -68,25 +66,30 @@ input[type="number"] {
   top: 45px;
   z-index: 2;
   font-size: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   border-radius: 0 0 4px 4px;
   list-style: none;
+  border: 1px solid #334155;
+  border-top: none;
 }
 
 .suggestions>li {
   text-align: left;
   padding: 8px 10px;
-  background-color: #eee;
-  color: #333;
+  background-color: #1e293b;
+  color: #f1f5f9;
   cursor: pointer;
+  border-bottom: 1px solid #334155;
 }
 
 .suggestions>li:last-child {
   border-radius: 0 0 4px 4px;
+  border-bottom: none;
 }
 
 .suggestions>li:hover {
-  background-color: #bcdcdb;
+  background-color: #334155;
+  color: #3b82f6;
 }
 
 #number-of-events {
@@ -107,30 +110,31 @@ input[type="number"] {
 .event {
   padding: 20px 20px 45px;
   text-align: left;
-  border: 1px solid #ddd;
+  border: 1px solid #334155;
   border-radius: 8px;
   position: relative;
   width: 100%;
   max-width: 700px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  background-color: white;
+  background-color: #1e293b;
 }
 
 .event:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  border-color: #3b82f6;
 }
 
 .event h2 {
   margin: 0 0 10px 0;
-  color: #333;
+  color: #f1f5f9;
   font-size: 18px;
 }
 
 .event p {
   margin: 5px 0;
-  color: #666;
+  color: #cbd5e1;
   font-size: 14px;
 }
 
@@ -140,8 +144,8 @@ input[type="number"] {
   bottom: 10px;
   padding: 8px 12px;
   border-radius: 6px;
-  border: 1px solid #007bff;
-  background-color: #007bff;
+  border: 1px solid #3b82f6;
+  background-color: #3b82f6;
   color: white;
   font-size: 12px;
   cursor: pointer;
@@ -149,22 +153,28 @@ input[type="number"] {
 }
 
 .details-btn:hover {
-  background-color: #0056b3;
+  background-color: #2563eb;
+  border-color: #2563eb;
 }
 
 .event-details {
   margin-top: 15px;
   padding-top: 15px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #334155;
+}
+
+.event-details p {
+  color: #cbd5e1;
 }
 
 .event-details a {
-  color: #007bff;
+  color: #3b82f6;
   text-decoration: none;
 }
 
 .event-details a:hover {
   text-decoration: underline;
+  color: #60a5fa;
 }
 
 @media (max-width: 768px) {
