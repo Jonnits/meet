@@ -1,21 +1,8 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
-}
-
 .App {
   text-align: center;
   padding: 2% 5%;
-  max-width: 1200px;
-  margin: 0 auto;
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .App * {
@@ -39,24 +26,28 @@ input[type="number"] {
   border: 1px solid #ccc;
   font-size: 14px;
   line-height: 20px;
+  align-self: center;
   height: 38px;
   margin-bottom: 20px;
 }
 
+.city {
+  width: 250px;
+}
+
 #city-search {
-  width: 100%;
-  max-width: 300px;
-  margin: 0 auto 20px;
   display: flex;
   flex-direction: column;
+  margin: auto;
   position: relative;
 }
 
 .suggestions {
-  width: 100%;
+  width: 250px;
   position: absolute;
   top: 45px;
   z-index: 2;
+  align-self: center;
   margin: 0;
   font-size: 14px;
   box-shadow: 10px 10px 16px -12px rgba(0, 0, 0, 0.75);
@@ -66,7 +57,6 @@ input[type="number"] {
   text-align: left;
   padding: 8px 6px 8px 10px;
   background-color: #eee;
-  color: #333;
   cursor: default;
 }
 
@@ -79,90 +69,29 @@ input[type="number"] {
   background-color: #bcdcdb;
 }
 
-/* —————————————————————————
-   Number of Events
-————————————————————————— */
-#number-of-events {
-  width: 100%;
-  max-width: 200px;
-  margin: 0 auto 30px;
-  display: flex;
-  justify-content: center;
-}
-
-#event-list {
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
 .event {
-  width: 100%;
-  padding: 20px 20px 45px;
+  padding: 10px 10px 35px;
+  margin-bottom: 10px;
   text-align: left;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 4px;
   position: relative;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.event:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .details-btn {
   position: absolute;
-  right: 15px;
-  bottom: 10px;
-  padding: 8px 12px;
-  border-radius: 6px;
+  right: 5px;
+  bottom: 5px;
+  padding: 5px 8px;
+  border-radius: 4px;
   outline: none;
   cursor: pointer;
-  border: 1px solid #007bff;
-  background-color: #007bff;
-  color: white;
-  font-size: 12px;
-  transition: background-color 0.2s ease;
 }
 
-.details-btn:hover {
-  background-color: #0056b3;
-}
-
-@media (max-width: 768px) {
-  .App {
-    padding: 3% 3%;
-  }
-
-  #city-search,
-  #number-of-events,
-  #event-list {
-    max-width: 100%;
-  }
-
-  .event {
-    padding: 15px 15px 40px;
-  }
-}
-
-@media (max-width: 480px) {
-  .App {
-    padding: 2% 2%;
-  }
-
-  .event {
-    padding: 12px 12px 35px;
-  }
-
-  .details-btn {
-    right: 10px;
-    bottom: 8px;
-    padding: 6px 10px;
-    font-size: 11px;
-  }
+.alerts-container {
+  position: fixed;
+  top: 0px;
+  left: 20px;
+  width: 250px;
+  z-index: 1000;
 }
