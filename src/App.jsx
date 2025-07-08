@@ -11,14 +11,20 @@ const App = () => {
   const [currentNOE,   setCurrentNOE]   = useState(32);
   const [events,       setEvents]       = useState([]);
   const [currentCity,  setCurrentCity]  = useState("See all cities");
+  const [isLoading,    setIsLoading]    = useState(true);
 
   useEffect(() => {
     fetchData();
   }, [currentCity, currentNOE]);
 
   const fetchData = async () => {
+    setIsLoading(true);
+    
     const allEvents = await getEvents();
-    if (!Array.isArray(allEvents)) return;
+    if (!Array.isArray(allEvents)) {
+      setIsLoading(false);
+      return;
+    }
 
     const filtered = currentCity === "See all cities"
       ? allEvents
@@ -26,7 +32,19 @@ const App = () => {
 
     setEvents(filtered.slice(0, currentNOE));
     setAllLocations(extractLocations(allEvents));
+    setIsLoading(false);
   };
+
+  if (isLoading) {
+    return (
+      <div className="App">
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p className="loading-text">Loading events...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="App">
