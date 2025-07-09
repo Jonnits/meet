@@ -48,11 +48,11 @@ const CitySearch = ({ allLocations = [], setCurrentCity }) => {
       {showSuggestions && (
         <ul className="suggestions">
           {suggestions.map(loc => (
-            <li key={loc} onClick={handleItemClick}>
+            <li key={loc} onMouseDown={handleItemClick}>
               {loc}
             </li>
           ))}
-          <li key="See all cities" onClick={handleItemClick}>
+          <li key="See all cities" onMouseDown={handleItemClick}>
             <b>See all cities</b>
           </li>
         </ul>
