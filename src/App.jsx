@@ -40,7 +40,7 @@ const App = () => {
       <div className="App">
         <div className="loading-container">
           <div className="loading-spinner"></div>
-          <p className="loading-text">Loading events...</p>
+          <p className="loading-text">Ready to Meet your perfect events?</p>
         </div>
       </div>
     );
