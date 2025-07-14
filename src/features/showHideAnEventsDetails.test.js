@@ -18,7 +18,11 @@ defineFeature(feature, test => {
     });
 
     when('the user receives the full list of events (all events)', async () => {
-      EventListDOM = AppDOM.querySelector('#event-list');
+      await waitFor(() => {
+        EventListDOM = AppDOM.querySelector('#event-list');
+        expect(EventListDOM).toBeInTheDocument();
+      });
+      
       await waitFor(() => {
         const EventListItems = within(EventListDOM).queryAllByRole('listitem');
         expect(EventListItems.length).toBe(32);
@@ -42,7 +46,11 @@ defineFeature(feature, test => {
     given('the user gets a list of events', async () => {
       AppComponent = render(<App />);
       AppDOM = AppComponent.container.firstChild;
-      EventListDOM = AppDOM.querySelector('#event-list');
+      
+      await waitFor(() => {
+        EventListDOM = AppDOM.querySelector('#event-list');
+        expect(EventListDOM).toBeInTheDocument();
+      });
       
       await waitFor(() => {
         EventListItems = within(EventListDOM).queryAllByRole('listitem');
@@ -75,7 +83,11 @@ defineFeature(feature, test => {
       const user = userEvent.setup();
       AppComponent = render(<App />);
       AppDOM = AppComponent.container.firstChild;
-      EventListDOM = AppDOM.querySelector('#event-list');
+      
+      await waitFor(() => {
+        EventListDOM = AppDOM.querySelector('#event-list');
+        expect(EventListDOM).toBeInTheDocument();
+      });
       
       await waitFor(() => {
         EventListItems = within(EventListDOM).queryAllByRole('listitem');

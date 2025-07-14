@@ -1,6 +1,3 @@
-/**
- * @jest-environment node
- */
 
 import puppeteer from 'puppeteer';
 
@@ -11,7 +8,7 @@ describe('show/hide event details', () => {
   beforeAll(async () => {
     browser = await puppeteer.launch();
     page    = await browser.newPage();
-    await page.goto('http://localhost:5173/');
+    await page.goto('https://meet-beryl-seven.vercel.app/');
     await page.waitForSelector('.event');
   }, 30000);
 
