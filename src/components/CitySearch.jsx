@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-const CitySearch = ({ allLocations = [], setCurrentCity }) => {
-  const [query, setQuery]           = useState('');
-  const [showSuggestions, setShow]  = useState(false);
-  const [suggestions, setSugs]      = useState(allLocations);
+const CitySearch = ({ allLocations = [], setCurrentCity, setInfoAlert }) => {
+  const [query, setQuery] = useState('');
+  const [showSuggestions, setShow] = useState(false);
+  const [suggestions, setSugs] = useState(allLocations);
 
   const buildSuggestions = value => {
     if (value.trim() === '') return allLocations;
@@ -15,7 +15,18 @@ const CitySearch = ({ allLocations = [], setCurrentCity }) => {
   const handleInputChange = e => {
     const value = e.target.value;
     setQuery(value);
-    setSugs(buildSuggestions(value));
+    
+    const filteredSuggestions = buildSuggestions(value);
+    setSugs(filteredSuggestions);
+    
+    let infoText;
+    if (value.trim() !== '' && filteredSuggestions.length === 0) {
+      infoText = "We can not find the city you are looking for. Please try another city";
+    } else {
+      infoText = "";
+    }
+    setInfoAlert(infoText);
+    
     if (value.trim() === '') {
       setCurrentCity('See all cities');
     }
@@ -31,6 +42,7 @@ const CitySearch = ({ allLocations = [], setCurrentCity }) => {
     setQuery(value === 'See all cities' ? '' : value);
     setCurrentCity(value);
     setShow(false);
+    setInfoAlert(""); 
   };
 
   return (

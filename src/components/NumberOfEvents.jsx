@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const NumberOfEvents = ({ numberOfEvents = 32, onNumberChange = () => {} }) => {
+const NumberOfEvents = ({ numberOfEvents = 32, onNumberChange = () => {}, setErrorAlert = () => {} }) => {
   const [number, setNumber] = useState(numberOfEvents);
 
   useEffect(() => {
@@ -10,7 +10,21 @@ const NumberOfEvents = ({ numberOfEvents = 32, onNumberChange = () => {} }) => {
   const handleChange = (e) => {
     const value = e.target.value;
     setNumber(value);
-    onNumberChange(value);
+    
+    if (isNaN(value) || value <= 0) {
+
+      let errorText;
+      if (isNaN(value)) {
+        errorText = "Only positive numbers are allowed";
+      } else if (value <= 0) {
+        errorText = "Only positive numbers are allowed";
+      }
+      setErrorAlert(errorText);
+    } else {
+
+      setErrorAlert("");
+      onNumberChange(value);
+    }
   };
 
   return (

@@ -210,6 +210,14 @@ input[type="number"]:focus {
   }
 }
 
+.alerts-container {
+  position: fixed;
+  top: 0px;
+  left: 20px;
+  width: 250px;
+  z-index: 1000;
+}
+
 .loading-text {
   color: #cbd5e1;
   font-size: 16px;
