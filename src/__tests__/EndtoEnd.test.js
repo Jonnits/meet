@@ -1,4 +1,3 @@
-
 import puppeteer from 'puppeteer';
 
 describe('show/hide event details', () => {
@@ -8,9 +7,13 @@ describe('show/hide event details', () => {
   beforeAll(async () => {
     browser = await puppeteer.launch();
     page    = await browser.newPage();
-    await page.goto('https://meet-beryl-seven.vercel.app/');
-    await page.waitForSelector('.event');
-  }, 30000);
+    await page.goto('http://localhost:5173/', {
+      waitUntil: 'networkidle2',
+      timeout: 60000
+    });
+
+    await page.waitForSelector('.event', { timeout: 30000 });
+  }, 60000);
 
   afterAll(() => browser.close());
 
@@ -37,11 +40,15 @@ describe('filter events by city', () => {
   let page;
 
   beforeAll(async () => {
-    browser = await puppeteer.launch({ headless: false, slowMo: 50 });
-    page    = await browser.newPage();
-    await page.goto('http://localhost:5173/');
-    await page.waitForSelector('.event');
-  }, 30000);
+    browser = await puppeteer.launch();
+    page = await browser.newPage();
+    await page.goto('http://localhost:5173/', {
+      waitUntil: 'networkidle2',
+      timeout: 60000
+    });
+
+    await page.waitForSelector('.event', { timeout: 30000 });
+  }, 60000);
 
   afterAll(async () => browser.close());
 
@@ -72,12 +79,7 @@ describe('filter events by city', () => {
     await page.type('#city-search input', 'Berlin');
     await page.waitForSelector('.suggestions li', { timeout: 10000 });
 
-    await page.evaluate(() => {
-      const items = document.querySelectorAll('.suggestions li');
-      items.forEach(li => {
-        if (li.textContent.includes('Berlin')) li.click();
-      });
-    });
+    await page.click('.suggestions li:first-child');
 
     await page.waitForTimeout(2000);
 
@@ -92,9 +94,8 @@ describe('filter events by city', () => {
     locations.forEach(loc => expect(loc).toContain('Berlin'));
     expect(locations.length).toBeGreaterThan(0);
     expect(locations.length).toBeLessThan(32);
-  }, 19000);
+  }, 20000);
 
-/*
   test('User can clear the city filter to see all events again', async () => {
     await page.click('#city-search input', { clickCount: 3 });
     await page.keyboard.press('Backspace');
@@ -121,5 +122,4 @@ describe('filter events by city', () => {
     const unique = Array.from(new Set(locs));
     expect(unique.length).toBeGreaterThan(1);
   }, 20000);
-  */
 });

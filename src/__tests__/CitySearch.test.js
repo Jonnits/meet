@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, within } from '@testing-library/react';
+import { render, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import CitySearch from '../components/CitySearch';
@@ -87,7 +87,12 @@ describe('<CitySearch /> integration', () => {
     const AppComponent = render(<App />);
     const AppDOM = AppComponent.container.firstChild;
 
-    const CitySearchDOM = AppDOM.querySelector('#city-search');
+    let CitySearchDOM;
+    await waitFor(() => {
+      CitySearchDOM = AppDOM.querySelector('#city-search');
+      expect(CitySearchDOM).toBeInTheDocument();
+    });
+
     const cityTextBox = within(CitySearchDOM).queryByRole('textbox');
 
     await user.type(cityTextBox, 'Berlin');
@@ -99,6 +104,6 @@ describe('<CitySearch /> integration', () => {
     );
 
     const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem');
-    expect(suggestionListItems.length).toBe(filteredSuggestions.length + 1); // +1 for 'See all cities'
+    expect(suggestionListItems.length).toBe(filteredSuggestions.length + 1); 
   });
 });
