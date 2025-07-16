@@ -35,13 +35,23 @@ export const getEvents = async () => {
 
   if (window.location.href.startsWith("http://localhost")) {
     console.log("[getEvents] Using local mock data.");
+    NProgress.done();
     return mockData.items;
+  }
+
+
+  if (!navigator.onLine) {
+    const events = localStorage.getItem("lastEvents");
+    NProgress.done();
+    console.log("[getEvents] User is offline, using cached events.");
+    return events ? JSON.parse(events) : [];
   }
 
   try {
     const token = await getAccessToken();
     if (!token) {
       console.warn("[getEvents] No access token retrieved.");
+      NProgress.done();
       return [];
     }
 
@@ -59,16 +69,30 @@ export const getEvents = async () => {
     console.log("[getEvents] Fetched result:", result);
 
     if (Array.isArray(result.events)) {
+      NProgress.done();
+
+      localStorage.setItem("lastEvents", JSON.stringify(result.events));
       return result.events;
     } else if (Array.isArray(result)) {
       console.warn("[getEvents] Expected 'events' key, got array directly.");
+      NProgress.done();
+
+      localStorage.setItem("lastEvents", JSON.stringify(result));
       return result;
     } else {
       console.error("[getEvents] Unexpected response format:", result);
+      NProgress.done();
     }
 
   } catch (error) {
     console.error("[getEvents] Error occurred:", error);
+    NProgress.done();
+    
+    const cachedEvents = localStorage.getItem("lastEvents");
+    if (cachedEvents) {
+      console.log("[getEvents] Using cached events due to error.");
+      return JSON.parse(cachedEvents);
+    }
   }
 
   return [];
