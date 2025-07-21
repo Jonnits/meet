@@ -97,11 +97,6 @@ input[type="number"]:focus {
   justify-content: center;
 }
 
-.number {
-  width: 60px;
-  text-align: center;
-}
-
 #event-list {
   display: flex;
   flex-direction: column;
@@ -208,14 +203,6 @@ input[type="number"]:focus {
   100% {
     transform: rotate(360deg);
   }
-}
-
-.alerts-container {
-  position: fixed;
-  top: 0px;
-  left: 20px;
-  width: 250px;
-  z-index: 1000;
 }
 
 .loading-text {
