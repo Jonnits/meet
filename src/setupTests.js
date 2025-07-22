@@ -14,3 +14,21 @@ const MESSAGES_TO_IGNORE = [
     const ignoreMessage = MESSAGES_TO_IGNORE.find(message => args.toString().includes(message));
     if (!ignoreMessage) originalError(...args);
   }
+
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
+
+jest.mock('recharts', () => ({
+  ResponsiveContainer: () => null,
+  PieChart: () => null,
+  Pie: () => null,
+  ScatterChart: () => null,
+  Scatter: () => null,
+  XAxis: () => null,
+  YAxis: () => null,
+  CartesianGrid: () => null,
+  Tooltip: () => null,
+}));
