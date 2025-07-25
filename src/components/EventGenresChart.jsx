@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { ResponsiveContainer, PieChart, Pie } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 
 const EventGenresChart = ({ events }) => {
   const [data, setData] = useState([]);
   
   const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'Angular'];
+  
+  // Step 1: Add the colors array with 5 colors for each genre (blue/purple theme)
+  const colors = ['#1E3A8A', '#3B82F6', '#8B5CF6', '#A855F7', '#6366F1'];
 
   useEffect(() => {
     const getData = () => {
@@ -46,10 +49,17 @@ const EventGenresChart = ({ events }) => {
         <Pie
           data={data}
           dataKey="value"
-          fill="#8884d8"
           labelLine={false}
           label={renderCustomizedLabel}
-          outerRadius={150}           
+          outerRadius={150}
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+          ))}
+        </Pie>
+        <Legend 
+          verticalAlign="bottom" 
+          align="center"
         />
       </PieChart>
     </ResponsiveContainer>
