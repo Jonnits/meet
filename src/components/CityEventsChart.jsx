@@ -1,49 +1,69 @@
 import React, { useState, useEffect } from 'react';
-import {
-  ScatterChart,
-  Scatter,
-  XAxis, YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer
-} from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 
-const CityEventsChart = ({ allLocations, events }) => {
+const EventGenresChart = ({ events }) => {
   const [data, setData] = useState([]);
+  
+  const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'Angular'];
+  
+  // Step 1: Add the colors array with 5 colors for each genre (blue/purple theme)
+  const colors = ['#1E3A8A', '#3B82F6', '#8B5CF6', '#A855F7', '#6366F1'];
 
   useEffect(() => {
     const getData = () => {
-      return allLocations.map((location) => {
-        const count = events.filter((event) => event.location === location).length
-        const city = location.split((/, | - /))[0]
-        return { city, count };
-      })
+      return genres.map(genre => {
+        const filteredEvents = events.filter(event => event.summary && event.summary.includes(genre));
+        return {
+          name: genre,
+          value: filteredEvents.length
+        };
+      });
     };
     
-    if (allLocations && events && allLocations.length > 0) {
+    if (events && Array.isArray(events) && events.length > 0) {
       setData(getData());
     }
-  }, [allLocations, events]); 
+  }, [events, events?.length]);
+
+  const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, percent, index }) => {
+    const RADIAN = Math.PI / 180;
+    const radius = outerRadius;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN) * 1.07;
+    const y = cy + radius * Math.sin(-midAngle * RADIAN) * 1.07;
+    return percent ? (
+      <text
+        x={x}
+        y={y}
+        fill="#8884d8"
+        textAnchor={x > cx ? 'start' : 'end'}
+        dominantBaseline="central"
+      >
+        {`${genres[index]} ${(percent * 100).toFixed(0)}%`}
+      </text>
+    ) : null;
+  };
 
   return (
     <ResponsiveContainer width="99%" height={400}>
-      <ScatterChart
-        data={data}
-        margin={{
-          top: 20,
-          right: 20,
-          bottom: 60,
-          left: 20,
-        }}
-      >
-        <CartesianGrid />
-        <XAxis type="category" dataKey="city" name="City" angle={60} interval={0} tick={{ dx: 20, dy: 40, fontSize: 14 }} />
-        <YAxis type="number" dataKey="count" name="Number of Events" />
-        <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-        <Scatter name="A school" data={data} fill="#8884d8" />
-      </ScatterChart>
+      <PieChart>
+        <Pie
+          data={data}
+          dataKey="value"
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius={150}
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+          ))}
+        </Pie>
+        <Legend 
+          verticalAlign="bottom" 
+          align="center"
+        />
+      </PieChart>
     </ResponsiveContainer>
   );
-}
+};
 
-export default CityEventsChart;
+export default EventGenresChart;
