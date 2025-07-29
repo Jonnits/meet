@@ -73,7 +73,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <img src="./meet-title-icon.png" alt="Meet logo" />
+      <img src="meet-title-icon.png" alt="Meet logo" className="app-logo" />
       <div className="alerts-container">
         {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
         {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}
@@ -89,36 +89,13 @@ const App = () => {
         onNumberChange={val => setCurrentNOE(Number(val))}
         setErrorAlert={setErrorAlert}
       />
-      <div 
-        className="charts-container"
-        style={{
-          display: 'grid',
-          gridTemplateColumns: windowWidth > 768 ? '1fr 1fr' : '1fr',
-          gap: '20px',
-          margin: '40px 0',
-          width: '100%'
-        }}
-      >
-        <div style={{
-          width: '100%',
-          height: '450px',
-          backgroundColor: '#1e293b',
-          border: '1px solid #475569',
-          borderRadius: '8px',
-          padding: '15px',
-          boxSizing: 'border-box'
-        }}>
+      <div className={`charts-container ${windowWidth <= 768 ? 'mobile' : ''}`}>
+        <div className="chart-box">
+          <h3 className="chart-title">Events by City</h3>
           <CityEventsChart allLocations={allLocations} events={events} />
         </div>
-        <div style={{
-          width: '100%',
-          height: '450px',
-          backgroundColor: '#1e293b',
-          border: '1px solid #475569',
-          borderRadius: '8px',
-          padding: '15px',
-          boxSizing: 'border-box'
-        }}>
+        <div className="chart-box">
+          <h3 className="chart-title">Events by Genre</h3>
           <EventGenresChart events={events} />
         </div>
       </div>
