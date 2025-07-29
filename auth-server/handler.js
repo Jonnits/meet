@@ -8,17 +8,15 @@ const SCOPES = ["https://www.googleapis.com/auth/calendar.events.public.readonly
 const {
   CLIENT_ID,
   CLIENT_SECRET,
-  CALENDAR_ID,
-  REDIRECT_URI
+  CALENDAR_ID
 } = process.env;
 
 function getRedirectUri(event) {
   const ref = event.headers.referer || event.headers.referrer;
-  if (ref) {
-    const u = new URL(ref);
-    return u.origin + u.pathname;
-  }
-  return REDIRECT_URI;
+  if (!ref) throw new Error('Missing referer header');
+  const url = new URL(ref);
+  const path = url.pathname.endsWith('/') ? url.pathname : url.pathname + '/';
+  return url.origin + path;
 }
 
 module.exports.getAuthURL = async (event) => {
