@@ -73,7 +73,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <img src="/meet-title-icon.png" alt="Meet logo" />
+      <img src="./meet-title-icon.png" alt="Meet logo" />
       <div className="alerts-container">
         {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
         {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}

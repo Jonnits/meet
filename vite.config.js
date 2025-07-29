@@ -3,13 +3,13 @@ import react from '@vitejs/plugin-react-swc'
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  base: '/meet/', 
+  base: '/meet/',
   plugins: [
     react(),
     VitePWA({
       manifest: {
-        "short_name": "React App",
-        "name": "Create React App Sample",
+        "short_name": "Meet App",
+        "name": "Meet - Event Discovery App",
         "icons": [
             {
             "src": "favicon.ico",
@@ -36,13 +36,14 @@ export default defineConfig({
             "purpose": "maskable"
             }
         ],
-        "start_url": ".", 
+        "start_url": ".",
         "display": "standalone",
         "theme_color": "#000000",
         "background_color": "#ffffff"
       },
       srcDir: 'src', 
-      filename: 'service-worker.js', 
+      filename: 'service-worker.js',
+      scope: '/meet/',
       registerType: 'autoUpdate',
       workbox: {
         runtimeCaching: [
