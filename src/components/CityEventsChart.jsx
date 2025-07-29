@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ResponsiveContainer, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const CityEventsChart = ({ allLocations, events }) => {
   const [data, setData] = useState([]);
@@ -13,44 +13,27 @@ const CityEventsChart = ({ allLocations, events }) => {
       });
     };
     
-    if (allLocations && events && Array.isArray(allLocations) && Array.isArray(events)) {
+    if (allLocations && events && allLocations.length > 0) {
       setData(getData());
     }
-  }, [allLocations, events]);
+  }, [allLocations, events]); 
 
   return (
     <ResponsiveContainer width="99%" height={400}>
-      <ScatterChart>
-        <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-        <XAxis 
-          type="category" 
-          dataKey="city" 
-          name="City"
-          angle={60}
-          textAnchor="start"
-          height={100}
-          tick={{ fontSize: 12, fill: '#cbd5e1' }}
-        />
-        <YAxis 
-          type="number" 
-          dataKey="count" 
-          name="Number of Events"
-          tick={{ fontSize: 12, fill: '#cbd5e1' }}
-          label={{ value: 'Number of Events', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fill: '#cbd5e1' } }}
-        />
-        <Tooltip 
-          cursor={{ strokeDasharray: '3 3' }}
-          contentStyle={{
-            backgroundColor: '#1e293b',
-            border: '1px solid #475569',
-            borderRadius: '4px',
-            color: '#f1f5f9'
-          }}
-        />
-        <Scatter 
-          data={data} 
-          fill="#3b82f6"
-        />
+      <ScatterChart
+        data={data}
+        margin={{
+          top: 20,
+          right: 20,
+          bottom: 60,
+          left: 20,
+        }}
+      >
+        <CartesianGrid />
+        <XAxis type="category" dataKey="city" name="City" angle={60} interval={0} tick={{ dx: 20, dy: 40, fontSize: 14 }} />
+        <YAxis type="number" dataKey="count" name="Number of Events" />
+        <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+        <Scatter name="Events by City" data={data} fill="#8884d8" />
       </ScatterChart>
     </ResponsiveContainer>
   );

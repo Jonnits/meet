@@ -6,7 +6,6 @@ const EventGenresChart = ({ events }) => {
   
   const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'Angular'];
   
-  // Step 1: Add the colors array with 5 colors for each genre (blue/purple theme)
   const colors = ['#1E3A8A', '#3B82F6', '#8B5CF6', '#A855F7', '#6366F1'];
 
   useEffect(() => {
