@@ -4,7 +4,7 @@ provider:
   name: aws
   runtime: nodejs18.x
   region: us-west-2
-  timeout: 30
+  timeout: 29
   environment:
     CLIENT_ID: ${file(config.json):CLIENT_ID}
     CLIENT_SECRET: ${file(config.json):CLIENT_SECRET}
@@ -32,7 +32,7 @@ functions:
     handler: handler.getAccessToken
     events:
       - http:
-          path: api/get-access-token/{code}
+          path: api/token/{code}
           method: get
           cors:
             origin: "*"
@@ -61,24 +61,3 @@ functions:
               - X-Amz-Security-Token
               - X-Amz-User-Agent
             allowCredentials: false
-
-resources:
-  Resources:
-    GatewayResponseDefault4XX:
-      Type: "AWS::ApiGateway::GatewayResponse"
-      Properties:
-        ResponseParameters:
-          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
-        ResponseType: DEFAULT_4XX
-        RestApiId:
-          Ref: "RestApiApigEvent"
-    GatewayResponseDefault5XX:
-      Type: "AWS::ApiGateway::GatewayResponse"
-      Properties:
-        ResponseParameters:
-          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
-        ResponseType: DEFAULT_5XX
-        RestApiId:
-          Ref: "RestApiApigEvent"

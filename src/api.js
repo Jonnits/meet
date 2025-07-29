@@ -19,7 +19,7 @@ export const getAccessToken = async () => {
     const code = await searchParams.get("code");
     if (!code) {
       const response = await fetch(
-        "https://sdr1kj1q36.execute-api.us-west-2.amazonaws.com/dev/api/get-auth-url"
+        "https://jexdmsso4k.execute-api.us-west-2.amazonaws.com/dev/api/get-auth-url"
       );
       const result = await response.json();
       const { authUrl } = result;
@@ -57,7 +57,7 @@ export const getEvents = async () => {
 
     removeQuery(); 
 
-    const url = `https://sdr1kj1q36.execute-api.us-west-2.amazonaws.com/dev/api/get-events/${token}`;
+    const url = `https://jexdmsso4k.execute-api.us-west-2.amazonaws.com/dev/api/get-events/${token}`;
     console.log(`[getEvents] Fetching events from: ${url}`);
 
     const response = await fetch(url);
@@ -107,7 +107,7 @@ const removeQuery = () => {
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const response = await fetch(
-    `https://sdr1kj1q36.execute-api.us-west-2.amazonaws.com/dev/api/token/${encodeCode}`
+    `https://jexdmsso4k.execute-api.us-west-2.amazonaws.com/dev/api/token/${encodeCode}`
   );
   const { access_token } = await response.json();
   if (access_token) {
