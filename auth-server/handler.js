@@ -6,25 +6,33 @@ const calendar = google.calendar("v3");
 const SCOPES = ["https://www.googleapis.com/auth/calendar.events.public.readonly"];
 
 const {
-  CLIENT_SECRET,
   CLIENT_ID,
+  CLIENT_SECRET,
   CALENDAR_ID,
   REDIRECT_URI
 } = process.env;
 
-const oAuth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URI
-);
+function getRedirectUri(event) {
+  const ref = event.headers.referer || event.headers.referrer;
+  if (ref) {
+    const u = new URL(ref);
+    return u.origin + u.pathname;
+  }
+  return REDIRECT_URI;
+}
 
-module.exports.getAuthURL = async () => {
-  const authUrl = oAuth2Client.generateAuthUrl({
+module.exports.getAuthURL = async (event) => {
+  const redirect = getRedirectUri(event);
+  const client = new google.auth.OAuth2(
+    CLIENT_ID,
+    CLIENT_SECRET,
+    redirect
+  );
+  const authUrl = client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
-    redirect_uri: REDIRECT_URI
+    redirect_uri: redirect
   });
-
   return {
     statusCode: 200,
     headers: {
@@ -38,7 +46,13 @@ module.exports.getAuthURL = async () => {
 module.exports.getAccessToken = async (event) => {
   try {
     const code = decodeURIComponent(event.pathParameters.code);
-    const { tokens } = await oAuth2Client.getToken(code);
+    const redirect = getRedirectUri(event);
+    const client = new google.auth.OAuth2(
+      CLIENT_ID,
+      CLIENT_SECRET,
+      redirect
+    );
+    const { tokens } = await client.getToken(code);
     return {
       statusCode: 200,
       headers: {
@@ -62,10 +76,11 @@ module.exports.getAccessToken = async (event) => {
 };
 
 async function listEvents(access_token) {
-  oAuth2Client.setCredentials({ access_token });
+  const client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET);
+  client.setCredentials({ access_token });
   const res = await calendar.events.list({
     calendarId: CALENDAR_ID,
-    auth: oAuth2Client,
+    auth: client,
     timeMin: new Date().toISOString(),
     singleEvents: true,
     orderBy: "startTime"
