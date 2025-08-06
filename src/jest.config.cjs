@@ -1,11 +1,11 @@
 module.exports = {
     testEnvironment: 'jest-environment-jsdom',
     transform: {
-      '^.+\\.jsx?$': 'babel-jest', // Transform JavaScript and JSX files using Babel
+      '^.+\\.jsx?$': 'babel-jest',
     },
     moduleNameMapper: {
-      '\\.(css|less|scss|sass)$': 'identity-obj-proxy', // Mock CSS imports
+      '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     },
     moduleFileExtensions: ['js', 'jsx'],
-    setupFilesAfterEnv: ['<rootDir>/setupTests.js'], // Path to the setup file
+    setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
    };

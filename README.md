@@ -8,28 +8,6 @@ Meet App is designed to provide a responsive and intuitive way for users to find
 
 ---
 
-## User Stories
-
-- **Filter Events by City**  
-  As a user, I should be able to filter events by city, so that I can see a list of events taking place in that city.
-
-- **Show/Hide Event Details**  
-  As a user, I should be able to show or hide the details of an event, so that I can choose to see more or less information depending on my interest.
-
-- **Specify Number of Events**  
-  As a user, I should be able to specify how many events I want to see at once, so that I can control the length of the event list to match my preferences or screen size.
-
-- **Use the App When Offline**  
-  As a user, I should be able to access the app and view previously loaded events even when I’m offline, so that I can still use the app without access to an internet connection.
-
-- **Add an App Shortcut to the Home Screen**  
-  As a user, I should be able to add the app to my device's home screen, so that I can launch it quickly like a native mobile app.
-
-- **Display Charts Visualizing Event Details**  
-  As a user, I should be able to view charts that visualize event data (such as number of events per city), so that I can better understand trends and distributions in the events.
-
----
-
 ## Feature Scenarios
 
 ### Feature: Filter Events By City
